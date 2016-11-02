@@ -40,6 +40,35 @@ public class LuceneSearcher {
     /**
      * 调用lucene检索 返回
      */
+    public ArrayList<SearchResult> luceneSearch_nolight(String queryString , int top)
+            throws Exception {
+
+        ArrayList<SearchResult> searchResult = new ArrayList<SearchResult>();
+        IndexSearcher searcher = new IndexSearcher(indexReader);
+        QueryBuilder builder = new QueryBuilder(analyzer);
+        Query query = builder.createMinShouldMatchQuery(field, queryString.trim(), 0.0f);
+
+        if(queryString.length()>1){//search(query, top);
+            TopDocs docs = searcher.search(query, top);
+            //searcher.s
+            for (ScoreDoc doc : docs.scoreDocs) {
+                int num = doc.doc;// 文档内部编号
+                Document docu = searcher.doc(num);
+                String sq = docu.get("content");
+                String sa = docu.get("link");
+                SearchResult searchere = new SearchResult(sa, sq);
+                searchResult.add(searchere);
+            }
+        }else{
+            System.err.println("null query at:"+queryString);
+        }
+        return searchResult;
+    }
+
+
+    /**
+     * 调用lucene检索 返回
+     */
     public ArrayList<SearchResult> luceneSearch(String queryString , int top)
             throws Exception {
 

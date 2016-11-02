@@ -1,6 +1,7 @@
 package search;
 
 
+import config.config;
 import entity.SearchResult;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -9,6 +10,7 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -17,7 +19,8 @@ public class Searcher {
 	public ArrayList<SearchResult> search(String queryString) {
 		ArrayList<SearchResult>  re = new ArrayList<>();
 		try {
-			String indexPath = "/home/hao/文档/j2ee_workspace/diskSearcher/data/index";
+			String indexPath = config.indexpath;
+			System.out.println(new File(indexPath).getPath());
 			int top=100;
 			String field = "content";
 	        Analyzer analyzer = new StandardAnalyzer();
@@ -27,10 +30,10 @@ public class Searcher {
 			
 	        IndexReader reader = DirectoryReader.open(dir);
 	        LuceneSearcher searcher = new LuceneSearcher(reader,field,analyzer);
-			re = searcher.luceneSearch(queryString,top);
+			re = searcher.luceneSearch_nolight(queryString,top);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
         return re;
         
