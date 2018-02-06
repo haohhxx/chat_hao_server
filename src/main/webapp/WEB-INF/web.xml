@@ -38,7 +38,7 @@
 
   <servlet-mapping>
     <servlet-name>chatServlet</servlet-name>
-    <url-pattern>/chatServer/get</url-pattern>
+    <url-pattern>/chatServer/newapi</url-pattern>
   </servlet-mapping>
 
   <!-- URL space mappings ============================================= -->
