@@ -55,7 +55,6 @@ public class ChatServelet extends HttpServlet {
         TEXTmessage tmess = JsoupXMLParser.parser(in);
         TEXTmessage reply = Replier.searchReply(tmess);
 
-        System.out.println(reply.toString());
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println(reply.toReplyString());
